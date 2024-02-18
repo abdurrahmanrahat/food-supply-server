@@ -24,6 +24,11 @@ async function run() {
 
 
         const usersCollection = client.db("foodSupply").collection("users");
+        const suppliesCollection = client.db("foodSupply").collection("supplies");
+
+        // ==============================================================
+        // USER COLLECTION
+        // ==============================================================
 
         // User Registration
         app.post('/api/v1/register', async (req, res) => {
@@ -78,8 +83,21 @@ async function run() {
 
 
         // ==============================================================
-        // WRITE YOUR CODE HERE
+        // FOOD SUPPLY COLLECTION
         // ==============================================================
+
+        // post supply
+        app.post("/api/v1/supplies", async (req, res) => {
+            const newSupply = req.body;
+
+            // Insert supply into the database
+            await suppliesCollection.insertOne(newSupply);
+
+            res.status(201).json({
+                success: true,
+                message: 'Supply inserted successfully'
+            });
+        })
 
 
         // Start the server
