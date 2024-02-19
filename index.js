@@ -177,7 +177,7 @@ async function run() {
     // ==============================================================
 
     // post supply donation
-    app.post("/api/v1/supplies", async (req, res) => {
+    app.post("/api/v1/donations", async (req, res) => {
       const newDonation = req.body;
 
       // Insert supply donation into the database
@@ -186,6 +186,17 @@ async function run() {
       res.status(201).json({
         success: true,
         message: "Supply donation inserted successfully",
+      });
+    });
+
+    // get supplies donation
+    app.get("/api/v1/donations", async (req, res) => {
+      const result = await donationsCollection.find().toArray();
+
+      res.status(201).json({
+        success: true,
+        message: "Supplies donation retrieved successfully",
+        data: result,
       });
     });
 
