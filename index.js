@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
@@ -107,6 +107,18 @@ async function run() {
                 success: true,
                 message: 'Supply inserted successfully',
                 data: result
+            });
+        })
+
+        // delete supply
+        app.delete("/api/v1/supplies/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            await suppliesCollection.deleteOne(query);
+
+            res.status(201).json({
+                success: true,
+                message: 'Supply deleted successfully',
             });
         })
 
