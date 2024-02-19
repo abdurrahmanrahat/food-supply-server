@@ -99,6 +99,17 @@ async function run() {
             });
         })
 
+        // get supplies
+        app.get("/api/v1/supplies", async (req, res) => {
+            const result = await suppliesCollection.find().toArray();
+
+            res.status(201).json({
+                success: true,
+                message: 'Supply inserted successfully',
+                data: result
+            });
+        })
+
 
         // Start the server
         app.listen(port, () => {
