@@ -112,7 +112,21 @@ async function run() {
 
       res.status(201).json({
         success: true,
-        message: "Supply inserted successfully",
+        message: "Supplies retrieved successfully",
+        data: result,
+      });
+    });
+
+    // get supply
+    app.get("/api/v1/supplies/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+
+      const result = await suppliesCollection.findOne(query);
+
+      res.status(201).json({
+        success: true,
+        message: "Supply retrieved successfully",
         data: result,
       });
     });
@@ -137,7 +151,7 @@ async function run() {
         query,
         updateInDb
       );
-      
+
       res.status(201).json({
         success: true,
         message: "Supply updated successfully",
