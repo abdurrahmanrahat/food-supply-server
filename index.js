@@ -27,6 +27,7 @@ async function run() {
 
     const usersCollection = client.db("foodSupply").collection("users");
     const suppliesCollection = client.db("foodSupply").collection("supplies");
+    const donationsCollection = client.db("foodSupply").collection("donations");
 
     // ==============================================================
     // USER COLLECTION
@@ -168,6 +169,23 @@ async function run() {
         success: true,
         message: "Supply deleted successfully",
         res: result,
+      });
+    });
+
+    // ==============================================================
+    // DONATION SUPPLY COLLECTION
+    // ==============================================================
+
+    // post supply donation
+    app.post("/api/v1/supplies", async (req, res) => {
+      const newDonation = req.body;
+
+      // Insert supply donation into the database
+      await donationsCollection.insertOne(newDonation);
+
+      res.status(201).json({
+        success: true,
+        message: "Supply donation inserted successfully",
       });
     });
 
