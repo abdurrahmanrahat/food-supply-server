@@ -220,7 +220,16 @@ async function run() {
       });
     });
 
+    // get volunteers
+    app.get("/api/v1/volunteers", async (req, res) => {
+      const result = await volunteersCollection.find().toArray();
 
+      res.status(201).json({
+        success: true,
+        message: "Volunteer retrieved successfully",
+        data: result,
+      });
+    });
 
     // Start the server
     app.listen(port, () => {
