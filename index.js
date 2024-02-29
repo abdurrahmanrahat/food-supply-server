@@ -28,6 +28,9 @@ async function run() {
     const usersCollection = client.db("foodSupply").collection("users");
     const suppliesCollection = client.db("foodSupply").collection("supplies");
     const donationsCollection = client.db("foodSupply").collection("donations");
+    const volunteersCollection = client
+      .db("foodSupply")
+      .collection("volunteers");
 
     // ==============================================================
     // USER COLLECTION
@@ -200,7 +203,24 @@ async function run() {
       });
     });
 
-    // checking
+    // ==============================================================
+    // VOLUNTEERS COLLECTION
+    // ==============================================================
+
+    // post volunteer
+    app.post("/api/v1/volunteers", async (req, res) => {
+      const newVolunteer = req.body;
+
+      // Insert supply donation into the database
+      await volunteersCollection.insertOne(newVolunteer);
+
+      res.status(201).json({
+        success: true,
+        message: "Volunteer inserted successfully",
+      });
+    });
+
+
 
     // Start the server
     app.listen(port, () => {
