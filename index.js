@@ -28,9 +28,8 @@ async function run() {
     const usersCollection = client.db("foodSupply").collection("users");
     const suppliesCollection = client.db("foodSupply").collection("supplies");
     const donationsCollection = client.db("foodSupply").collection("donations");
-    const volunteersCollection = client
-      .db("foodSupply")
-      .collection("volunteers");
+    const volunteersCollection = client.db("foodSupply").collection("volunteers");
+    const testimonialsCollection = client.db("foodSupply").collection("testimonials");
 
     // ==============================================================
     // USER COLLECTION
@@ -227,6 +226,34 @@ async function run() {
       res.status(201).json({
         success: true,
         message: "Volunteer retrieved successfully",
+        data: result,
+      });
+    });
+
+    // ==============================================================
+    // TESTIMONIALS COLLECTION
+    // ==============================================================
+
+    // post volunteer
+    app.post("/api/v1/testimonials", async (req, res) => {
+      const newData = req.body;
+
+      // Insert supply donation into the database
+      await testimonialsCollection.insertOne(newData);
+
+      res.status(201).json({
+        success: true,
+        message: "Testimonial inserted successfully",
+      });
+    });
+
+    // get volunteers
+    app.get("/api/v1/testimonials", async (req, res) => {
+      const result = await testimonialsCollection.find().toArray();
+
+      res.status(201).json({
+        success: true,
+        message: "Testimonials retrieved successfully",
         data: result,
       });
     });
