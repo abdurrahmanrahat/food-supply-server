@@ -30,6 +30,7 @@ async function run() {
     const donationsCollection = client.db("foodSupply").collection("donations");
     const volunteersCollection = client.db("foodSupply").collection("volunteers");
     const testimonialsCollection = client.db("foodSupply").collection("testimonials");
+    const gratitudesCollection = client.db("foodSupply").collection("gratitudes");
 
     // ==============================================================
     // USER COLLECTION
@@ -234,7 +235,7 @@ async function run() {
     // TESTIMONIALS COLLECTION
     // ==============================================================
 
-    // post volunteer
+    // post testimonials
     app.post("/api/v1/testimonials", async (req, res) => {
       const newData = req.body;
 
@@ -247,9 +248,37 @@ async function run() {
       });
     });
 
-    // get volunteers
+    // get testimonials
     app.get("/api/v1/testimonials", async (req, res) => {
       const result = await testimonialsCollection.find().toArray();
+
+      res.status(201).json({
+        success: true,
+        message: "Testimonials retrieved successfully",
+        data: result,
+      });
+    });
+
+    // ==============================================================
+    // GRATITUDE COLLECTION
+    // ==============================================================
+
+    // post gratitudes
+    app.post("/api/v1/gratitudes", async (req, res) => {
+      const newData = req.body;
+
+      // Insert supply donation into the database
+      await gratitudesCollection.insertOne(newData);
+
+      res.status(201).json({
+        success: true,
+        message: "Testimonial inserted successfully",
+      });
+    });
+
+    // get gratitudes
+    app.get("/api/v1/gratitudes", async (req, res) => {
+      const result = await gratitudesCollection.find().toArray();
 
       res.status(201).json({
         success: true,
